@@ -1,0 +1,71 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section class="container mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-6">
+        <span class="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider">
+            🚑 Emergency Response
+        </span>
+        <h1 class="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+            Donate Blood, <br>
+            <span class="text-brand">Save a Life.</span>
+        </h1>
+        <p class="text-lg text-gray-600 leading-relaxed">
+            LifeFlow connects hospitals with local donors in real-time. 
+            Receive alerts instantly when your blood type is needed nearby.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <a href="{% url 'register' %}" class="px-8 py-4 bg-brand text-white rounded-xl font-bold text-lg shadow-xl shadow-green-200 hover:shadow-2xl hover:bg-brandDark transition transform hover:-translate-y-1 text-center">
+                Join as a Donor
+            </a>
+            <a href="{% url 'register' %}" class="px-8 py-4 bg-white text-gray-700 border-2 border-gray-100 rounded-xl font-bold text-lg hover:border-brand hover:text-brand transition text-center">
+                Register Hospital
+            </a>
+        </div>
+    </div>
+
+    <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-brand to-green-400 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+        
+        <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1000&auto=format&fit=crop" 
+             alt="Doctor holding blood bag" 
+             class="relative rounded-2xl shadow-2xl w-full object-cover h-[400px] transform transition hover:scale-[1.01]">
+    </div>
+</section>
+
+<section class="bg-white py-20 border-t border-gray-100">
+    <div class="container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">How LifeFlow Works</h2>
+            <p class="text-gray-500">We bridged the gap between emergency requirements and willing donors using smart technology.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="p-8 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-lg transition hover:bg-white text-center group">
+                <div class="w-16 h-16 bg-red-100 text-red-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6 group-hover:scale-110 transition">
+                    🚨
+                </div>
+                <h3 class="text-xl font-bold mb-3">1. Hospital Request</h3>
+                <p class="text-gray-500">Hospitals post urgent requirements for specific blood groups directly to our dashboard.</p>
+            </div>
+
+            <div class="p-8 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-lg transition hover:bg-white text-center group">
+                <div class="w-16 h-16 bg-blue-100 text-blue-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6 group-hover:scale-110 transition">
+                    🔔
+                </div>
+                <h3 class="text-xl font-bold mb-3">2. Instant Alert</h3>
+                <p class="text-gray-500">Nearby donors with the matching blood group receive an email and SMS notification instantly.</p>
+            </div>
+
+            <div class="p-8 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-lg transition hover:bg-white text-center group">
+                <div class="w-16 h-16 bg-green-100 text-green-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6 group-hover:scale-110 transition">
+                    🤝
+                </div>
+                <h3 class="text-xl font-bold mb-3">3. Life Saved</h3>
+                <p class="text-gray-500">Donors visit the hospital, complete the donation, and earn badges for their heroism.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

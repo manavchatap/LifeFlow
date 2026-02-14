@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 border border-gray-200 rounded-lg shadow-sm mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-center text-brand">Login to LifeFlow</h2>
+    
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">Username</label>
+            <input type="text" name="username" class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-brand" required>
+        </div>
+        
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">Password</label>
+            <input type="password" name="password" class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-brand" required>
+        </div>
+
+        <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-2 px-4 rounded transition">
+            Login
+        </button>
+    </form>
+
+    <p class="mt-4 text-center text-sm text-gray-600">
+        Don't have an account? <a href="{% url 'register' %}" class="text-brand font-bold underline">Sign up</a>
+    </p>
+</div>
+{% endblock %}

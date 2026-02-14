@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 border border-gray-200 rounded-lg shadow-sm mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-center text-brand">{{ type }} Registration</h2>
+    
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">{{ field.label }}</label>
+            <div class="w-full border border-gray-300 rounded focus-within:border-brand focus-within:ring-1 focus-within:ring-brand">
+                {{ field }} 
+            </div>
+            {% if field.help_text %}
+            <p class="text-xs text-gray-500 mt-1">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+            <p class="text-xs text-red-600 mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3 px-4 rounded transition mt-4">
+            Complete Registration
+        </button>
+    </form>
+
+    <p class="mt-4 text-center text-sm text-gray-600">
+        Already have an account? <a href="{% url 'login' %}" class="text-brand font-bold underline">Login here</a>
+    </p>
+</div>
+
+<style>
+    input, select, textarea {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        outline: none;
+        border-radius: 0.25rem;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto text-center py-12">
+    <h2 class="text-3xl font-bold mb-8 text-gray-800">Join LifeFlow</h2>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+        <a href="{% url 'hospital_register' %}" class="block p-8 bg-white border-2 border-transparent hover:border-brand rounded-xl shadow-lg transition transform hover:-translate-y-1 group">
+            <div class="h-20 w-20 bg-purple-100 text-brand rounded-full flex items-center justify-center mx-auto mb-6 text-3xl font-bold group-hover:bg-brand group-hover:text-white transition">
+                H
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-gray-900">I am a Hospital</h3>
+            <p class="text-gray-500">Register your institution to manage blood inventory and broadcast emergency requests.</p>
+        </a>
+
+        <a href="{% url 'donor_register' %}" class="block p-8 bg-white border-2 border-transparent hover:border-red-500 rounded-xl shadow-lg transition transform hover:-translate-y-1 group">
+            <div class="h-20 w-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl font-bold group-hover:bg-red-600 group-hover:text-white transition">
+                D
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-gray-900">I am a Donor</h3>
+            <p class="text-gray-500">Register to receive alerts when your specific blood type is needed nearby.</p>
+        </a>
+    </div>
+    
+    <div class="mt-12">
+        <p class="text-gray-600">Already have an account? <a href="{% url 'login' %}" class="text-brand font-bold underline hover:text-brandDark">Login here</a></p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg border-t-4 border-brand mt-10">
+    
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">You are a Hero!</h1>
+        <p class="text-gray-500 mt-2">Thank you for stepping up to save a life.</p>
+    </div>
+
+    <div class="bg-red-50 p-6 rounded-lg border border-red-100 mb-8 text-center">
+        <p class="text-sm text-gray-500 uppercase tracking-wide font-bold">Urgency Level</p>
+        <h2 class="text-4xl font-extrabold text-red-600 mt-1">{{ req.urgency }}</h2>
+        <div class="mt-4 inline-block bg-white px-4 py-2 rounded shadow-sm">
+            <span class="text-gray-500 font-bold">Blood Needed:</span>
+            <span class="text-2xl font-bold text-gray-900 ml-2">{{ req.blood_group }}</span>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <div class="flex items-start">
+            <div class="flex-shrink-0 h-10 w-10 bg-brand text-white rounded-full flex items-center justify-center font-bold">
+                1
+            </div>
+            <div class="ml-4">
+                <h3 class="text-lg font-bold text-gray-900">Call the Hospital</h3>
+                <p class="text-gray-600">Tell them you are coming for the "LifeFlow Donation Request".</p>
+                <a href="tel:{{ req.hospital.user.phone_number }}" class="block mt-2 text-2xl font-bold text-brand hover:underline">
+                    {{ req.hospital.user.phone_number }}
+                </a>
+            </div>
+        </div>
+
+        <div class="flex items-start">
+            <div class="flex-shrink-0 h-10 w-10 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center font-bold">
+                2
+            </div>
+            <div class="ml-4">
+                <h3 class="text-lg font-bold text-gray-900">Go to this Address</h3>
+                <p class="text-xl text-gray-800 mt-1">{{ req.hospital.hospital_name }}</p>
+                <p class="text-gray-600">{{ req.hospital.city }}</p>
+                <a href="https://www.google.com/maps/search/?api=1&query={{ req.hospital.hospital_name }}+{{ req.hospital.city }}" target="_blank" class="text-sm text-blue-500 underline mt-1 block">
+                    View on Google Maps &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="map" class="h-64 w-full rounded-lg shadow-md mt-6 border border-gray-200"></div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+    // Initialize the map (Defaulting to Nagpur coordinates for demo)
+    // In a real app, you'd use the hospital's actual lat/long from the database
+    var map = L.map('map').setView([21.1458, 79.0882], 13); 
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Add a marker for the hospital
+    var marker = L.marker([21.1458, 79.0882]).addTo(map);
+    marker.bindPopup("<b>{{ req.hospital.hospital_name }}</b><br>{{ req.hospital.city }}").openPopup();
+</script>
+
+    <div class="mt-10 text-center">
+        <a href="{% url 'dashboard' %}" class="text-gray-500 hover:text-gray-900 font-medium">
+            &larr; Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

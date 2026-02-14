@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    
+    <div class="bg-white p-6 rounded-xl shadow-md mb-8 border-l-4 border-brand flex flex-col md:flex-row justify-between items-center">
+        <div>
+            <h2 class="text-3xl font-bold text-gray-800">Welcome, {{ donor.user.username }}!</h2>
+            <p class="text-gray-600 mt-1">
+                You have made <strong>{{ donor.donation_count }}</strong> donations so far.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-6 mt-4 md:mt-0">
+            <div class="text-center">
+                {% if donor.donation_count >= 10 %}
+                    <div class="text-5xl">🏆</div>
+                    <span class="text-xs font-bold text-yellow-600 uppercase tracking-wider">Super Star</span>
+                {% elif donor.donation_count >= 5 %}
+                    <div class="text-5xl">🥇</div>
+                    <span class="text-xs font-bold text-yellow-500 uppercase tracking-wider">Hero</span>
+                {% elif donor.donation_count >= 1 %}
+                    <div class="text-5xl">🥈</div>
+                    <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Life Saver</span>
+                {% else %}
+                    <div class="text-5xl">🥉</div>
+                    <span class="text-xs font-bold text-green-500 uppercase tracking-wider">Newbie</span>
+                {% endif %}
+            </div>
+
+            <div class="border-l pl-6">
+                <p class="text-xs text-gray-400 mb-1">Did you just donate?</p>
+                <a href="{% url 'mark_donated' %}" class="bg-green-100 text-green-700 px-4 py-2 rounded-lg font-bold hover:bg-green-200 transition text-sm flex items-center gap-2">
+                    ✅ Mark as Donated
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Urgent Requests Nearby</h3>
+    
+    {% if requests %}
+        <div class="grid md:grid-cols-2 gap-6">
+            {% for req in requests %}
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-bold">
+                                {{ req.blood_group }} Needed
+                            </span>
+                            <h4 class="text-xl font-bold mt-2 text-gray-900">{{ req.hospital.hospital_name }}</h4>
+                        </div>
+                        <span class="px-3 py-1 rounded text-xs font-bold uppercase tracking-wider
+                            {% if req.urgency == 'Critical' %}bg-red-500 text-white animate-pulse
+                            {% elif req.urgency == 'High' %}bg-orange-500 text-white
+                            {% else %}bg-yellow-400 text-gray-800{% endif %}">
+                            {{ req.urgency }}
+                        </span>
+                    </div>
+                    
+                    <div class="text-gray-600 text-sm mb-6 space-y-1">
+                        <p>📍 Location: {{ req.hospital.city }}</p>
+                        <p>📅 Posted: {{ req.created_at|date:"M d, Y" }}</p>
+                    </div>
+
+                    <a href="{% url 'request_detail' req.pk %}" class="block w-full text-center bg-gray-900 text-white font-bold py-2 rounded-lg hover:bg-gray-800 transition">
+                        Donate Now
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+            <p class="text-gray-500 text-lg">No active requests in {{ donor.city }} right now.</p>
+            <p class="text-sm text-gray-400">Great news! Everyone is healthy.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

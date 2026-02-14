@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    
+    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+        <h2 class="text-2xl font-bold mb-4 text-brand">Blood Inventory</h2>
+        
+        <table class="w-full text-left mb-6">
+            <thead>
+                <tr class="border-b-2 border-brand">
+                    <th class="py-2">Type</th>
+                    <th class="py-2">Units</th>
+                    <th class="py-2">Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in inventory %}
+                <tr class="border-b">
+                    <td class="py-2 font-bold">{{ item.blood_group }}</td>
+                    <td class="py-2">{{ item.unit_count }}</td>
+                    <td class="py-2 text-sm text-gray-500">{{ item.last_updated|timesince }} ago</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="py-4 text-gray-500">No inventory logged yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="font-bold mb-2">Update Stock</h3>
+        <form method="post" class="flex gap-2">
+            {% csrf_token %}
+            <input type="hidden" name="update_inventory" value="true">
+            {{ i_form.blood_group }} {{ i_form.unit_count }}
+            <button type="submit" class="bg-brand hover:bg-brandDark text-white px-4 py-2 rounded">Update</button>
+        </form>
+    </div>
+
+    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">Active Requests</h2>
+        
+        <ul class="mb-6 space-y-3">
+            {% for req in my_requests %}
+            <li class="flex justify-between items-center bg-white p-3 shadow-sm rounded border-l-4 border-red-500">
+                <span>
+                    <strong class="text-lg">{{ req.blood_group }}</strong> 
+                    <span class="text-sm text-gray-600">({{ req.urgency }})</span>
+                </span>
+                <span class="text-xs text-gray-400">Posted: {{ req.created_at|date:"M d" }}</span>
+            </li>
+            {% empty %}
+            <p class="text-gray-500">No active emergency requests.</p>
+            {% endfor %}
+        </ul>
+
+        <h3 class="font-bold mb-2">Create New Request</h3>
+        <form method="post" class="flex flex-col gap-3">
+            {% csrf_token %}
+            <input type="hidden" name="create_request" value="true">
+            <div>
+                <label>Blood Group:</label>
+                {{ r_form.blood_group }}
+            </div>
+            <div>
+                <label>Urgency:</label>
+                {{ r_form.urgency }}
+            </div>
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded w-full">Broadcast Request</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
