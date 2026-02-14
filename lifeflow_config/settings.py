@@ -120,6 +120,7 @@ STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'core.User'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Email Settings (Development)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
